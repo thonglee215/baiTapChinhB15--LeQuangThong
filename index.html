@@ -12,6 +12,64 @@
 
 <body>
 
+    <div class="container">
+
+        <form class="w-50 py-5">
+            <h2>Bài 1</h2>
+            <div class="row">
+                <div class="col pr-1">
+                    <input type="number" class="form-control" placeholder="Điểm Chuẩn" id="diemChuan">
+                </div>
+                <div class="col pr-1">
+                    <input type="number" class="form-control" placeholder="Điểm Toán" id="diemToan">
+                </div>
+                <div class="col pr-1">
+                    <input type="number" class="form-control" placeholder="Điểm Lý" id="diemLy">
+                </div>
+                <div class="col pr-1">
+                    <input type="number" class="form-control" placeholder="Điểm Hóa" id="diemHoa">
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col form-group">
+                    <label for="">Đối tượng</label>
+                    <select class="form-control" id="doiTuong">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
+                </div>
+                <div class="col form-group">
+                    <label for="">Khu vực</label>
+                    <select class="form-control" id="khuVuc">
+                        <option>X</option>
+                        <option>A</option>
+                        <option>B</option>
+                        <option>C</option>
+                    </select>
+                </div>
+            </div>
+            <button id="calc1" type="button" class="mt-3 mb-3 btn btn-primary">Submit</button>
+            <P id="ketQua1" class="alert alert-success"></P>
+        </form>
+    </div>
+
+    <div class="container">
+        <form class="w-50 py-5">
+            <h2>Bài 2</h2>
+            <div class="row">
+                <div class="col pr-1">
+                    <input type="text" class="form-control" placeholder="Họ và Tên" id="hoVaTen">
+                </div>
+                <div class="col pr-1">
+                    <input type="number" class="form-control" placeholder="Số chữ điện (Kw)" id="chuDien">
+                </div>
+            </div>
+            <button id="calc2" type="button" class="mt-3 mb-3 btn btn-primary">Submit</button>
+            <P id="ketQua2" class="alert alert-success"></P>
+        </form>
+    </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
