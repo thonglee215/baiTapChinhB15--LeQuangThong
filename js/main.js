@@ -19,6 +19,81 @@ Khối 1: Input
        ketQua
 */
 
+function kiemTraDiemSan(diem){
+    if (diem > 30 || diem <=0) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+function kiemTraDiem(diem){
+    if (diem > 10 || diem < 0) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+function kiemTraDiem0(diem){
+    if (diem == 0) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+function diemCong1(cong){
+    switch (cong) {
+        case "X":
+            cong = 0;
+            break;
+        case "A":
+            cong = 2;
+            break;
+        case "B":
+            cong = 1
+            break;
+        case "C":
+            cong = 0.5
+            break;
+    }
+    return cong;
+};
+
+function diemCong2(cong){
+    switch (cong) {
+        case 1:
+            cong = 2.5;
+            break;
+        case 2:
+            cong = 1.5;
+            break;
+        case 3:
+            cong = 1;
+            break;
+    }
+    return cong;
+};
+
+function toTal(cong1, cong2, mon1, mon2, mon3){
+    var tong= cong1 + cong2 + mon1 + mon2 + mon3;
+    return tong;
+}
+
+function kq(ketQua, fp){
+    if (ketQua >= fp) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// function ketQua(tong, ){}
+
 function tuyenSinh() {
     var fp = Number(document.getElementById("diemChuan").value);
     var toan = Number(document.getElementById("diemToan").value);
@@ -26,41 +101,25 @@ function tuyenSinh() {
     var hoa = Number(document.getElementById("diemHoa").value);
     var zone = document.getElementById("khuVuc").value;
     var obj = Number(document.getElementById("doiTuong").value);
-    switch (zone) {
-        case "A":
-            zone = 2;
-            break;
-        case "B":
-            zone = 1
-            break;
-        case "C":
-            zone = 0.5
-            break;
+    
+    var dc1 = diemCong1(zone);
+    var dc2 = diemCong2(obj);
+    var tong = toTal(dc1, dc2, toan, ly, hoa);
+    
+    if (kiemTraDiem(toan) == false || kiemTraDiem(ly) ==false || kiemTraDiem(hoa)==false) {;
+        alert("Điểm thi không hợp lệ.");
     }
-    switch (obj) {
-        case 1:
-            obj = 2.5;
-            break;
-        case 2:
-            obj = 1.5;
-            break;
-        case 3:
-            obj = 1;
-            break;
+    else if (kiemTraDiemSan(fp) == false){
+        alert("Điểm sàn không hợp lệ.");
     }
-
-    var ketQua =toan + ly + hoa + obj + zone;
-
-    if (toan < 0 || ly < 0 || hoa < 0 || fp <= 0 || fp > 30) {;
-        alert("Điểm thi phải lớn hơn hoặc bằng 0 Và điểm chuẩn phải lớn hơn 0 và bé hơn 30.");
-    }
-    else if (toan == 0 || ly == 0 || hoa == 0) {
+    else if (kiemTraDiem0(toan) == false || kiemTraDiem0(ly) == false || kiemTraDiem0(hoa) == false ) {
         document.getElementById("ketQua1").innerHTML = "Thí sinh đã trượt vì có môn điểm bằng 0";
-    }else if (ketQua >= fp) {
-        document.getElementById("ketQua1").innerHTML = "Thí sinh đã đậu. Điểm của thí sinh là: " + ketQua;
+    }
+    else if (kq(tong, fp)) {
+        document.getElementById("ketQua1").innerHTML = "Thí sinh đã đậu. Điểm của thí sinh là: " + tong;
     }
     else{
-        document.getElementById("ketQua1").innerHTML = "Thí sinh đã trượt. Điểm của thí sinh là: " + ketQua;
+        document.getElementById("ketQua1").innerHTML = "Thí sinh đã trượt. Điểm của thí sinh là: " + tong;
     }
 
 }
