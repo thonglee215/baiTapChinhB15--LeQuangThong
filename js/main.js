@@ -177,7 +177,7 @@ function tinhTien(kw, gia_50_dau, gia_50_ke, gia_100_ke, gia_150_ke, gia_con_lai
 }
 
 function tienDien() {
-    var name = document.getElementById("name").value;
+    var name = document.getElementById("hoVaTen1").value;
     var kw = Number(document.getElementById("soChuDien").value);
     tongTien = 0;
     tongTien = tinhTien(kw, KW_50_DAU, KW_50_KE, KW_100_KE, KW_150_KE, KW_CON_LAI);
@@ -260,28 +260,26 @@ document.getElementById("calc3").onclick = tienThue;
 
 /**  BÀI 4
 Khối 1: Input
-      name, thuNhap, soNguoi
+      khachHang, maKh, soKenh, soKetNoi
 
  Khối 2: Các bước xử lý
      B1: 
-       + Tạo hàm tinhThue
-       + Tạo hàm tienThue
+       + Tạo hàm tinhHoaDon
+       + Tạo hàm tongHoaDon
 
-     B2: Trong hàm tinhThue, lập công thức và kiểm tra điều kiện
-       Nếu tongThuNhap đến 60 => tongThue = tongThuNhap * 5%
-       Nếu tongThuNhap trên 60 đến 120 => tongThue = tongThuNhap * 10%
-       Nếu tongThuNhap trên 120 đến 210 => tongThue = tongThuNhap * 15%
-       Nếu tongThuNhap trên 210 đến 384 => tongThue = tongThuNhap * 20%
-       Nếu tongThuNhap trên 384 đến 624 => tongThue = tongThuNhap * 25%
-       Nếu tongThuNhap trên 624 đến 960 => tongThue = tongThuNhap * 30%
-       Nếu tongThuNhap trên 960 => tongThue = tongThuNhap * 35%
+     B2: Trong hàm tinhHoaDon, lập công thức và kiểm tra điều kiện
+        Nếu soKetNoi <= 10 => tongHoaDon = hoaDon + dichVu + caoCap + soKenh
+        Ngược lại => tongHoaDon = hoaDon + dichVu + dichVuPlus * (ketNoi - 10) + caoCap * soKenh
      
-     B3: Trong hàm tienThue 
+        B3: Trong hàm tongHoaDon 
        + DOM tới thẻ cần lấy dữ liệu của form và lấy value
-       + tongThuNhap = thuNhap - 4 - soNguoi * 1.6
-       + Gọi hàm tongThuNhap, tinhThue và áp các giá trị vào
- Khối 3: Thông báo output
-       name, tienThue
+       + Lập công thức và kiểm tra điều kiện
+        Nếu khachHang = "Nhà dân" => Gọi hàm tinhHoaDon và nhập dữ liệu của Nhà dân như đã khai báo
+        Nếu khachHang = "Doanh nghiệp" => Gọi hàm tinhHoaDon và nhập dữ liệu của Doanh nghiệp như đã khai báo   
+        Nếu không phải 2 đối tượng trên => alert mời nhập lại
+
+Khối 3: Thông báo output
+    maKh, tongHoaDon
 */
 
 
@@ -293,8 +291,19 @@ var DICHVU_DN = 75;
 var DICHVU_PLUS = 5;
 var CAOCAP_DN = 50;
 
+document.getElementById("khachHang").addEventListener("change", hienSoKetNoi);
 
-function tinhHoaDonDn(hoaDon, dichVu, ketNoi, dichVuPlus, caoCap, soKenh) {
+        function hienSoKetNoi() {
+            var x = document.getElementById("khachHang");
+            if (x.value == "Doanh nghiệp") {
+              document.getElementById("soKetNoi").style.display = "block";
+            } else {
+              document.getElementById("soKetNoi").style.display = "none";
+              document.getElementById("soKetNoi").value = 0;
+            }
+        }
+
+function tinhHoaDon(hoaDon, dichVu, ketNoi, dichVuPlus, caoCap, soKenh) {
     if (ketNoi <= 10) {
         return hoaDon + dichVu + caoCap * soKenh;
     }
@@ -303,7 +312,7 @@ function tinhHoaDonDn(hoaDon, dichVu, ketNoi, dichVuPlus, caoCap, soKenh) {
     }
 }
 
-function tinhHoaDon() {
+function tongHoaDon() {
     var khachHang = document.getElementById("khachHang").value;
     var maKh = document.getElementById("maKH").value;
     var soKenh = document.getElementById("soKenh").value;
@@ -311,11 +320,11 @@ function tinhHoaDon() {
 
     switch (khachHang) {
         case "Nhà dân":
-            var tongHoaDon = tinhHoaDonDn(HOADON_ND, DICHVU_ND, soKetNoi, DICHVU_PLUS, CAOCAP_ND, soKenh);
+            var tongHoaDon = tinhHoaDon(HOADON_ND, DICHVU_ND, soKetNoi, DICHVU_PLUS, CAOCAP_ND, soKenh);
             break;
 
         case "Doanh nghiệp":
-            var tongHoaDon = tinhHoaDonDn(HOADON__DN, DICHVU_DN, soKetNoi, DICHVU_PLUS, CAOCAP_DN, soKenh);
+            var tongHoaDon = tinhHoaDon(HOADON__DN, DICHVU_DN, soKetNoi, DICHVU_PLUS, CAOCAP_DN, soKenh);
             break;
 
         case "Loại khách hàng":
@@ -325,7 +334,7 @@ function tinhHoaDon() {
 
     document.getElementById("ketQua4").innerHTML = "Mã khách hàng: " + maKh + " ; Tiền cáp: " + "$" + tongHoaDon.toLocaleString();
 }
-document.getElementById("calc4").onclick = tinhHoaDon;
+document.getElementById("calc4").onclick = tongHoaDon;
 
 
 
